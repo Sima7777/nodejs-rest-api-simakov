@@ -22,28 +22,28 @@ const addContact = async (req, res) => {
   sendSuccessRes(res, { result }, 201)
 }
 
-// const updateById = async (req, res) => {
-//   const { id } = req.params
-//   const result = await productsOperations.updateById(id, req.body)
-//   if (!result) {
-//     throw new NotFound(`Product with id=${id} not found`)
-//   }
-//   sendSuccessRes(res, { result })
-// }
+const updateById = async (req, res) => {
+  const { contactId } = req.params
+  const result = await productsOperations.updateById(contactId, req.body)
+  if (!result) {
+    throw new NotFound(`Product with id=${contactId} not found`)
+  }
+  sendSuccessRes(res, { result })
+}
 
-// const removeById = async (req, res, next) => {
-//   const { id } = req.params
-//   const result = await productsOperations.removeById(id)
-//   if (!result) {
-//     throw new NotFound(`Product with id=${id} not found`)
-//   }
-//   sendSuccessRes(res, { message: 'Success delete' })
-// }
+const removeContact = async (req, res, next) => {
+  const { contactId } = req.params
+  const result = await productsOperations.removeContact(contactId)
+  if (!result) {
+    throw new NotFound(`Product with id=${contactId} not found`)
+  }
+  sendSuccessRes(res, { message: 'Success delete' })
+}
 
 module.exports = {
   listContacts,
   getContactById,
   addContact,
-  //   updateById,
-  //   removeById,
+  updateById,
+  removeContact,
 }

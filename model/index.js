@@ -26,8 +26,6 @@ const getContactById = async (contactId) => {
   return contact
 }
 
-// const removeContact = async (contactId) => {}
-
 const filePath = path.join(__dirname, 'contacts.json')
 
 const updateAllContacts = async (newContacts) => {
@@ -42,12 +40,39 @@ const addContact = async (body) => {
   return newContact
 }
 
-// const updateContact = async (contactId, body) => {}
+const removeContact = async (contactId) => {
+  const contacts = await listContacts()
+  const idx = contacts.findIndex(
+    (item) => stringify(item.id) === stringify(contactId),
+  )
+  if (idx === -1) {
+    return null
+  }
+  const newContacts = contacts.filter(
+    (item) => stringify(item.id) !== stringify(contactId),
+  )
+  await updateAllContacts(newContacts)
+  return `Контакт с id ${contactId} был успешно удален`
+}
+
+const updateById = async (contactId, body) => {
+  const contacts = await listContacts()
+  const idx = contacts.findIndex(
+    (item) => stringify(item.id) === stringify(contactId),
+  )
+  if (idx === -1) {
+    return null
+  }
+  const contactToUpdate = { ...contacts[idx], ...body }
+  contacts[idx] = contactToUpdate
+  await updateAllContacts(contacts)
+  return contactToUpdate
+}
 
 module.exports = {
   listContacts,
   getContactById,
-  // removeContact,
+  removeContact,
   addContact,
-  // updateContact,
+  updateById,
 }

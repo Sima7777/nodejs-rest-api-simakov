@@ -16,12 +16,12 @@ router.post(
   controllerWrapper(contacts.addContact),
 )
 
-// router.delete('/:contactId', async (req, res, next) => {
-//   res.json({ message: 'template message' })
-// })
+router.delete('/:contactId', controllerWrapper(contacts.removeContact))
 
-// router.put('/:contactId', async (req, res, next) => {
-//   res.json({ message: 'template message' })
-// })
+router.put(
+  '/:contactId',
+  validation(contactSchema),
+  controllerWrapper(contacts.updateById),
+)
 
 module.exports = router
