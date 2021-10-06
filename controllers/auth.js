@@ -65,15 +65,8 @@ const logout = async (req, res) => {
 }
 
 const current = async (req, res) => {
-  const { token } = req.body
-  const user = await User.findOne(
-    { token },
-    '_id email password subscription token',
-  )
-  const { email, subscription } = user
-  if (!user) {
-    throw new BadRequest('Not authorized')
-  }
+  const { email, subscription } = req.user
+
   res.json({
     status: '200 OK',
     data: {
