@@ -5,6 +5,7 @@ const { User } = require('../models')
 const jwt = require('jsonwebtoken')
 const { SECRET_KEY } = process.env
 const { BadRequest } = require('http-errors')
+const gravatar = require('gravatar')
 
 const signup = async (req, res) => {
   const { email, password } = req.body
@@ -16,6 +17,8 @@ const signup = async (req, res) => {
   const newUser = new User({ email })
 
   newUser.setPassword(password)
+
+  newUser.avatarURL = gravatar.url(email, {}, false)
 
   await newUser.save()
 
